@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDataService {
-
     CallBacks callBacks;
 
     WeatherDataService(CallBacks callBacks) {
@@ -57,7 +56,7 @@ public class WeatherDataService {
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
 
-    public void getCityForecastById(String cityId , Context context){
+    public void getCityForecastById(String cityId, Context context) {
         String url = "https://www.metaweather.com/api/location/" + cityId;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -65,7 +64,7 @@ public class WeatherDataService {
                 List<WeatherReportModel> listTemp = new ArrayList<>();
                 try {
                     JSONArray root = response.getJSONArray("consolidated_weather");
-                    for(int i = 0 ; i < root.length() ; i++){
+                    for (int i = 0; i < root.length(); i++) {
                         JSONObject dataTemp = (JSONObject) root.get(i);
                         WeatherReportModel modelTemp = new WeatherReportModel();
                         modelTemp.setId(dataTemp.getInt("id"));
@@ -81,20 +80,22 @@ public class WeatherDataService {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                callBacks.gotError("Error");
             }
         });
         MySingleton.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-//
-//    public List<WeatherReportModel> getCityForecastByName(String cityName){
-//
-//    }
+
+    public void getCityForecastByName(String cityName, Context context) {
+        /* in order to perform this function first we are going to call getCityId method and also create an anonumous class which will send us the reponce
+        back and then we will do same with the getForecastById method
+         */
+    }
 
     public interface CallBacks {
         void gotCityId(String cityId);
 
-        void gotCityName(String cityName);
+        void gotCityName(List<WeatherReportModel> list);
 
         void gotWeatherDataById(List<WeatherReportModel> list);
 

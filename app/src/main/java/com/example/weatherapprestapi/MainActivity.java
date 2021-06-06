@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -72,17 +73,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void gotCityName(String cityName) {
-
+    public void gotCityName(List<WeatherReportModel> list) {
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this , android.R.layout.simple_list_item_1 , list);
+        listView.setAdapter(arrayAdapter);
     }
 
     @Override
     public void gotWeatherDataById(List<WeatherReportModel> list) {
-        Toast.makeText(this, list.toString() , Toast.LENGTH_SHORT).show();
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this , android.R.layout.simple_list_item_1 , list);
+        listView.setAdapter(arrayAdapter);
     }
 
     @Override
     public void gotError(String errorMessage) {
-
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

@@ -15,4 +15,6 @@ data class WeatherReportModel(
         var humidity: Int = 0,
         var visibility: Double = 0.0,
         var predictability: Int = 0,
-        )
+){
+        override fun toString(): String = "id = $id  state name = $weather_state_name and the temp = $the_temp"
+}

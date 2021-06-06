@@ -20,9 +20,7 @@ public class MySingleton {
     }
 
     public static synchronized MySingleton getInstance(Context context) {
-        if (instance == null) {
-            instance = new MySingleton(context);
-        }
+        if (instance == null) { instance = new MySingleton(context); }
         return instance;
     }
 
